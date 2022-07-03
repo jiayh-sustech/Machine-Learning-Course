@@ -4,7 +4,7 @@
 
 **PyTorch** is an open source machine learning framework that commonly used for research prototyping and production deployment. In this lab, we will train an image classifier using neural networks (NNs) under PyTorch. A simple NN as below can be constructed using the ***torch.nn*** package.
 
-![image-20220627171039570](Lab6 NN.assets/figure1.png)
+![image-20220627171039570](Lab6.assets/figure1.png)
 
 *LeNet-5* (above figure)  is a simple feed-forward network. It takes the input, feeds it through
 
