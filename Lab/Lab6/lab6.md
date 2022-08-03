@@ -224,7 +224,9 @@ Please finish **Exercise** and **Questions**.
 
 #### Exercise
 
-Follow the above instructions of Image Classifier Training with PyTorch to train your own image classifier (using the [CIFAR10 dataset](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html), or another dataset you prefere). Discuss the classification performance using different parameter values and options of the training program.
+Follow the above instructions of Image Classifier Training with PyTorch to train your own image classifier (using the [CIFAR10 dataset](https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html), or another dataset you prefer). 
+
+Please try to improve performance of classification by trying different network structures (add layers, modify parameters and so on) and different training strategies (loss function, optimizer and so on). 
 
 #### Questions
 
