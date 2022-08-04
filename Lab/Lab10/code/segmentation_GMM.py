@@ -93,9 +93,9 @@ class GMM:
             new_prior = None
             new_priors.append(new_prior)
 
-            self.mus = np.asarray(new_mus)
-            self.covs = np.asarray(new_covs)
-            self.priors = np.asarray(new_priors)
+        self.mus = np.asarray(new_mus)
+        self.covs = np.asarray(new_covs)
+        self.priors = np.asarray(new_priors)
 
     def fit(self, data, iteration):
         prev_log_liklihood = None

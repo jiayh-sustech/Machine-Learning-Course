@@ -96,9 +96,9 @@ class GMM:
             # TODO: calc mixing coefficients
             new_priors.append(soft_counts[i] / np.sum(soft_counts))
 
-            self.mus = np.asarray(new_mus)
-            self.covs = np.asarray(new_covs)
-            self.priors = np.asarray(new_priors)
+        self.mus = np.asarray(new_mus)
+        self.covs = np.asarray(new_covs)
+        self.priors = np.asarray(new_priors)
 
     def fit(self, data, iteration):
         prev_log_liklihood = None
