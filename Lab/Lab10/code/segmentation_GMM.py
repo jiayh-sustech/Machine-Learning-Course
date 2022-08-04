@@ -54,7 +54,7 @@ class GMM:
         """
         E-step
         :param datas:   original data
-        :return:        posterior probability (gama) and log likelihood
+        :return:        posterior probability (gamma) and log likelihood
         """
         probs = []
         for i in range(self.ncomp):
@@ -66,20 +66,20 @@ class GMM:
         # TODO: calc log likelihood
         log_likelihood = None
 
-        # TODO: calc gama
-        gama = None
+        # TODO: calc gamma
+        gamma = None
 
-        return gama, log_likelihood
+        return gamma, log_likelihood
 
-    def update(self, datas, gama):
+    def update(self, datas, gamma):
         """
         M-step
         :param datas:   original data
-        :param gama:    gama
+        :param gamma:    gamma
         :return:
         """
         new_mus, new_covs, new_priors = [], [], []
-        soft_counts = np.sum(gama, axis=0)
+        soft_counts = np.sum(gamma, axis=0)
         for i in range(self.ncomp):
             # TODO: calc mu
             new_mu = None
@@ -102,8 +102,8 @@ class GMM:
 
         bar = tqdm.tqdm(total=iteration)
         for i in range(iteration):
-            gama, log_likelihood = self.inference(data)
-            self.update(data, gama)
+            gamma, log_likelihood = self.inference(data)
+            self.update(data, gamma)
             if prev_log_liklihood is not None and abs(log_likelihood - prev_log_liklihood) < 1e-10:
                 break
             prev_log_likelihood = log_likelihood

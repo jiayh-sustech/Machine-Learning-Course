@@ -54,7 +54,7 @@ class GMM:
         """
         E-step
         :param datas:   original data
-        :return:        posterior probability (gama) and log likelihood
+        :return:        posterior probability (gamma) and log likelihood
         """
         probs = []
         for i in range(self.ncomp):
@@ -67,29 +67,29 @@ class GMM:
         log_likelihood = np.sum(preds, axis=1)
         log_likelihood = np.sum(np.log(log_likelihood))
 
-        # TODO: calc gama
-        gama = preds / np.sum(preds, axis=1, keepdims=True)
+        # TODO: calc gamma
+        gamma = preds / np.sum(preds, axis=1, keepdims=True)
 
-        return gama, log_likelihood
+        return gamma, log_likelihood
 
-    def update(self, datas, gama):
+    def update(self, datas, gamma):
         """
         M-step
         :param datas:   original data
-        :param gama:    gama
+        :param gamma:    gamma
         :return:
         """
         new_mus, new_covs, new_priors = [], [], []
-        soft_counts = np.sum(gama, axis=0)
+        soft_counts = np.sum(gamma, axis=0)
         for i in range(self.ncomp):
             # TODO: calc mu
-            new_mu = np.sum(gama[:, i].reshape(-1, 1) * datas, axis=0)
+            new_mu = np.sum(gamma[:, i].reshape(-1, 1) * datas, axis=0)
             new_mu /= soft_counts[i]
             new_mus.append(new_mu)
 
             # TODO: calc cov
             data_shifted = datas - new_mu.reshape(1, -1)
-            new_cov = (np.expand_dims(gama[:, i], -1) * data_shifted).T @ data_shifted
+            new_cov = (np.expand_dims(gamma[:, i], -1) * data_shifted).T @ data_shifted
             new_cov /= soft_counts[i]
             new_covs.append(new_cov)
 
@@ -105,8 +105,8 @@ class GMM:
 
         bar = tqdm.tqdm(total=iteration)
         for i in range(iteration):
-            gama, log_likelihood = self.inference(data)
-            self.update(data, gama)
+            gamma, log_likelihood = self.inference(data)
+            self.update(data, gamma)
             if prev_log_liklihood is not None and abs(log_likelihood - prev_log_liklihood) < 1e-10:
                 break
             prev_log_likelihood = log_likelihood
