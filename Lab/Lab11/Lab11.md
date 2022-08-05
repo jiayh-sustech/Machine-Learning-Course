@@ -73,7 +73,9 @@ def train():
 
 After training, you can invoke `display()` to watch the trajectory taxi takes in the map.
 
+### Sample Result
 
+![taxi-v3](Lab11.assets/taxi-v3.gif)
 
 ## III. Lab Requirements
 
