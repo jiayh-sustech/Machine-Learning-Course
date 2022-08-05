@@ -77,7 +77,7 @@ def train():
             print("average reward:" + str(episode) + ": " + str(mean_reward))
 
 
-def valid():
+def eval():
     rewards = []
     for episode in range(total_test_episodes):
         state = env.reset()
@@ -100,7 +100,7 @@ def valid():
 def training_step(save_file=None):
     init()
     train()
-    valid()
+    eval()
 
     # save Q_table
     if save_file is None:
