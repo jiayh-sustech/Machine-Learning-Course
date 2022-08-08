@@ -117,6 +117,7 @@ class Descriptor:
     def getFeatureVector(self, image):
 
         """Return the feature vector for an image."""
+
         if image.shape[:2] != self.size:
             image = cv2.resize(image, self.size, interpolation=cv2.INTER_AREA)
 
