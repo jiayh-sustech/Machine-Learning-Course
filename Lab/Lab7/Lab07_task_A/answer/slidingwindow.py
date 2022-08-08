@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+import cv2
 
 
 def slidingWindow(image_size, init_size=(64, 64), x_overlap=0.5, y_step=0.05,
@@ -44,3 +46,35 @@ def slidingWindow(image_size, init_size=(64, 64), x_overlap=0.5, y_step=0.05,
             windows.append((x, y, x + win_width, y + win_height))
 
     return windows
+
+
+def display_windows(img: str, color=(0, 0, 255), thick=6):
+    """
+    Shows all windows of slidingWindow() in an image
+
+    @param img:     path of img you want to show
+    @param color:   windows' color drawn on img
+    @param thick:   width of windows' edges
+    @return         an img on which windows are drawn
+    """
+    image = plt.imread(img)
+    h, w, c = image.shape
+    windows = slidingWindow((w, h))
+    rects = []
+    for w in windows:
+        rects.append(((int(w[0]), int(w[1])), (int(w[2]), int(w[3]))))
+
+    random_color = False
+    # Iterate through windows
+    for rect in rects:
+        if color == 'random' or random_color:
+            color = (np.random.randint(0, 255), np.random.randint(0, 255), np.random.randint(0, 255))
+            random_color = True
+        # Draw a rectangle given windows coordinates
+        cv2.rectangle(image, rect[0], rect[1], color, thick)
+
+    plt.figure(figsize=(10, 10))
+    plt.imshow(image)
+    plt.show()
+
+    return image
