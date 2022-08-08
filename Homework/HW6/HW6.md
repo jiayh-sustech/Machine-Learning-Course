@@ -22,7 +22,7 @@ $$y(\mathbf x) = \mathbf w^T\phi(\mathbf x) + b$$
 
 show that the negative log likelihood, with the addition of a quardratic regularization term, takes the form
 
-$$\sum^N_{n=1}E_{LR}(y_nt_n) + \lambda\|\mathbf{w}\|^2$$
+$$\sum^N_{n=1}E_{LR}(y_nt_n) + \lambda\|\|\mathbf{w}\|\|^2$$
 
 
 
@@ -74,7 +74,7 @@ Kernel functions implicitly define some mapping function $\phi(\cdot)$ that tran
 
 With the help of a kernel function, SVM attempts to construct a hyper-plane in the feature space $Q$ that maximizes the margin between two classes. The classification decision of any $\mathbf{x}$ is made on the basis of the sign of
 
-$$<\hat{\mathbf{w}},\phi(x)>+\hat{w}_0=\sum_{i\in SV} y_i\alpha_iK(\mathbf{x}_i,\mathbf{x})+\hat{w}_0=f(\mathbf{x};\alpha,\hat{w}_0)$$
+$$<\hat{\mathbf{w}},\phi(x)>+ \hat{w_0} = \sum_{i\in SV} y_i\alpha_iK(\mathbf{x}_i,\mathbf{x})+\hat{w}_0=f(\mathbf{x};\alpha,\hat{w}_0)$$
 
 where $\hat{\mathbf{w}}$ and $\hat{w}_0$ are parameters for the classification hyper-plane in the feature space $Q$, $SV$ is the set of support vectors, and $\alpha_i$ is the coefficient for the $i$-th support vector. Again we use the radial basis kernel function. Assume that the training instances are linearly separable in the feature space $Q$, and assume that the SVM finds a margin that perfectly separates the points.
 
@@ -90,27 +90,23 @@ $$f(\mathbf{x};\alpha,\hat{w}_0)\approx\hat{w}_0$$
 
 Please finish the codes in classes __RBF__, **PloynomialKernel**, **SupportVectorClassifier**, **RelevanceVectorRegressor**, **RelevanceVectorClassifier**, show the figures as below.
 
-<center>
-<figure class='half'>
+<p align='middle'>
     <img src="./HW6.assets/figure1.png" width="300" height="300"/>
     <img src="./HW6.assets/figure2.png" width="300" height="300"/>
-    </figure>
-</center>
+</p>
 
- 
 
-<center><b><font size ='4'>Figure 1&2. Maximum Margin Classifiers</font></b></center></font>
+<p align='middle'><b><font size ='4'>Figure 1&2. Maximum Margin Classifiers</font></b></p></font>
 
-![](./HW6.assets/figure3.png)
+<p align='middle'>
+    <img src="./HW6.assets/figure3.png"/>
+</p>
+<p align='middle'><b><font size ='4'>Figure 3. Overlapping Class Distributions</font></b></p></font>
 
-<center><b><font size ='4'>Figure 3. Overlapping Class Distributions</font></b></center></font>
-
-<center>
-    <figure class='half'>
+<p align='middle'>
         <img src='./HW6.assets/figure4.png' width='300' height='280'>
         <img src='./HW6.assets/figure5.png' width='300' height='280'>
-    </figure>
-</center>
+</p>
 
-<center><b><font size ='4'>Figure 4&5. RVM for Regression and Classification</font></b></center></font>
+<p align='middle'><b><font size ='4'>Figure 4&5. RVM for Regression and Classification</font></b></p></font>
 
