@@ -2,23 +2,23 @@ from collections import deque
 from datetime import datetime
 import os
 import pickle
-import time
+import tqdm
 import cv2
 import numpy as np
 from scipy.ndimage.measurements import label
 from descriptor import Descriptor
 from slidingwindow import slidingWindow
 
-class Detector:
 
+class Detector:
     """
     Class for finding objects in a video stream. Loads and utilizes a
     pretrained classifier.
     """
 
-    def __init__(self, init_size=(64,64), x_overlap=0.5, y_step=0.05,
-            x_range=(0, 1), y_range=(0, 1), scale=1.5):
-        
+    def __init__(self, init_size=(64, 64), x_overlap=0.5, y_step=0.05,
+                 x_range=(0, 1), y_range=(0, 1), scale=1.5):
+
         """For input arguments, @see slidingwindow.#slidingWindow(...)"""
 
         self.init_size = init_size
@@ -57,20 +57,20 @@ class Detector:
         # produces an error. Thus, we instantiate a new descriptor object
         # using the same parameters on which the classifier was trained.
         self.descriptor = Descriptor(
-                hog_features=classifier_data["hog_features"],
-                hist_features=classifier_data["hist_features"],
-                spatial_features=classifier_data["spatial_features"],
-                hog_lib=classifier_data["hog_lib"],
-                size=classifier_data["size"],
-                hog_bins=classifier_data["hog_bins"],
-                pix_per_cell=classifier_data["pix_per_cell"],
-                cells_per_block=classifier_data["cells_per_block"],
-                block_stride=classifier_data["block_stride"],
-                block_norm=classifier_data["block_norm"],
-                transform_sqrt=classifier_data["transform_sqrt"],
-                signed_gradient=classifier_data["signed_gradient"],
-                hist_bins=classifier_data["hist_bins"],
-                spatial_size=classifier_data["spatial_size"])
+            hog_features=classifier_data["hog_features"],
+            hist_features=classifier_data["hist_features"],
+            spatial_features=classifier_data["spatial_features"],
+            hog_lib=classifier_data["hog_lib"],
+            size=classifier_data["size"],
+            hog_bins=classifier_data["hog_bins"],
+            pix_per_cell=classifier_data["pix_per_cell"],
+            cells_per_block=classifier_data["cells_per_block"],
+            block_stride=classifier_data["block_stride"],
+            block_norm=classifier_data["block_norm"],
+            transform_sqrt=classifier_data["transform_sqrt"],
+            signed_gradient=classifier_data["signed_gradient"],
+            hist_bins=classifier_data["hist_bins"],
+            spatial_size=classifier_data["spatial_size"])
 
         return self
 
@@ -90,17 +90,17 @@ class Detector:
             image = image[:, :, np.newaxis]
 
         feature_vectors = [self.descriptor.getFeatureVector(
-                image[y_upper:y_lower, x_upper:x_lower, :])
+            image[y_upper:y_lower, x_upper:x_lower, :])
             for (x_upper, y_upper, x_lower, y_lower) in self.windows]
 
         # Scale feature vectors, predict, and return predictions.
         feature_vectors = self.scaler.transform(feature_vectors)
         predictions = self.classifier.predict(feature_vectors)
-        return [self.windows[ind] for ind in np.argwhere(predictions == 1)[:,0]]
+        return [self.windows[ind] for ind in np.argwhere(predictions == 1)[:, 0]]
 
     def detectVideo(self, video_capture=None, num_frames=9, threshold=120,
-            min_bbox=None, show_video=True, draw_heatmap=True,
-            draw_heatmap_size=0.2, write=False, write_fps=24):
+                    min_bbox=None, show_video=True, draw_heatmap=True,
+                    draw_heatmap_size=0.2, write=False, write_fps=24):
 
         """
         Find objects in each frame of a video stream by integrating bounding
@@ -127,13 +127,15 @@ class Detector:
         cap = video_capture
         if not cap.isOpened():
             raise RuntimeError("Error opening VideoCapture.")
+
+        fps_total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         (grabbed, frame) = cap.read()
         (h, w) = frame.shape[:2]
 
         # Store coordinates of all windows to be checked at every frame.
         self.windows = slidingWindow((w, h), init_size=self.init_size,
-                x_overlap=self.x_overlap, y_step=self.y_step,
-                x_range=self.x_range, y_range=self.y_range, scale=self.scale)
+                                     x_overlap=self.x_overlap, y_step=self.y_step,
+                                     x_range=self.x_range, y_range=self.y_range, scale=self.scale)
 
         if min_bbox is None:
             min_bbox = (int(0.02 * w), int(0.02 * h))
@@ -151,17 +153,20 @@ class Detector:
         # frame, sum in the deque to compute summed_heatmap. After
         # thresholding, label blobs in summed_heatmap with
         # scipy.ndimage.measurements.label and store in heatmap_labels.
-        current_heatmap= np.zeros((frame.shape[:2]), dtype=np.uint8)
+        current_heatmap = np.zeros((frame.shape[:2]), dtype=np.uint8)
         summed_heatmap = np.zeros_like(current_heatmap, dtype=np.uint8)
         last_N_frames = deque(maxlen=num_frames)
         heatmap_labels = np.zeros_like(current_heatmap, dtype=np.int)
 
         # Weights for the frames in last_N_frames for producing summed_heatmap.
         # Recent frames are weighted more heavily than older frames.
+        bar = tqdm.tqdm(total=fps_total, desc="Detecting process")
         weights = np.linspace(1 / (num_frames + 1), 1, num_frames)
         while True:
             (grabbed, frame) = cap.read()
+            bar.update()
             if not grabbed:
+                bar.close()
                 break
 
             current_heatmap[:] = 0
@@ -172,16 +177,16 @@ class Detector:
             last_N_frames.append(current_heatmap)
             for i, heatmap in enumerate(last_N_frames):
                 cv2.add(summed_heatmap, (weights[i] * heatmap).astype(np.uint8),
-                    dst=summed_heatmap)
+                        dst=summed_heatmap)
 
             # Apply blur and/or dilate to the heatmap.
-            #cv2.GaussianBlur(summed_heatmap, (5,5), 0, dst=summed_heatmap)
-            cv2.dilate(summed_heatmap, np.ones((7,7), dtype=np.uint8),
-                dst=summed_heatmap)
+            # cv2.GaussianBlur(summed_heatmap, (5,5), 0, dst=summed_heatmap)
+            cv2.dilate(summed_heatmap, np.ones((7, 7), dtype=np.uint8),
+                       dst=summed_heatmap)
 
             if draw_heatmap:
                 inset = cv2.resize(summed_heatmap, inset_size,
-                    interpolation=cv2.INTER_AREA)
+                                   interpolation=cv2.INTER_AREA)
                 inset = cv2.cvtColor(inset, cv2.COLOR_GRAY2BGR)
                 frame[:inset_size[1], :inset_size[0], :] = inset
 
@@ -201,7 +206,7 @@ class Detector:
                 if (x_lower - x_upper > min_bbox[0]
                         and y_lower - y_upper > min_bbox[1]):
                     cv2.rectangle(frame, (x_upper, y_upper), (x_lower, y_lower),
-                        (0, 255, 0), 6)
+                                  (0, 255, 0), 6)
 
             if write:
                 writer.write(frame)

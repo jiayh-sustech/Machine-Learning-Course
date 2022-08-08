@@ -8,7 +8,7 @@ pos_dir = "../samples/vehicles"
 neg_dir = "../samples/non-vehicles"
 
 # Replace this with the path to your test video file.
-video_file = "../videos/test_video.mp4"
+video_file = "../videos/project_video.mp4"
 
 def experiment1():
     """
