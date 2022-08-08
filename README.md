@@ -1,2 +1,2 @@
 # Machine-Learning-Course
-Materials for the intelligent robotics course
+Materials for the machine learning course
