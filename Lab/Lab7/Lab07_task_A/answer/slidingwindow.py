@@ -1,8 +1,8 @@
 import numpy as np
 
 
-def slidingWindow(image_size, init_size=(64, 64), x_overlap=0.2, y_step=0.02,
-                  x_range=(0, 1), y_range=(0.55, 0.8), scale=1.5):
+def slidingWindow(image_size, init_size=(64, 64), x_overlap=0.5, y_step=0.05,
+                  x_range=(0, 1), y_range=(0, 1), scale=1.5):
     """
     Run a sliding window across an input image and return a list of the
     coordinates of each window.

@@ -2,9 +2,10 @@ from collections import deque
 from datetime import datetime
 import os
 import pickle
-import tqdm
+import time
 import cv2
 import numpy as np
+import tqdm
 from scipy.ndimage.measurements import label
 from descriptor import Descriptor
 from slidingwindow import slidingWindow
@@ -160,8 +161,8 @@ class Detector:
 
         # Weights for the frames in last_N_frames for producing summed_heatmap.
         # Recent frames are weighted more heavily than older frames.
-        bar = tqdm.tqdm(total=fps_total, desc="Detecting process")
         weights = np.linspace(1 / (num_frames + 1), 1, num_frames)
+        bar = tqdm.tqdm(total=fps_total, desc="Detect process")
         while True:
             (grabbed, frame) = cap.read()
             bar.update()

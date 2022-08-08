@@ -5,15 +5,15 @@ import random
 import time
 import warnings
 import cv2
-import numpy as np
 import tqdm
+import numpy as np
 from sklearn import svm
 from sklearn.preprocessing import StandardScaler
 from descriptor import Descriptor
 
 
 def processFiles(pos_dir, neg_dir, recurse=False, output_file=False,
-                 output_filename=None, color_space="rgb", channels=[0, 1, 2],
+                 output_filename=None, color_space="bgr", channels=[0, 1, 2],
                  hog_features=False, hist_features=False, spatial_features=False,
                  hog_lib="cv", size=(64, 64), hog_bins=9, pix_per_cell=(8, 8),
                  cells_per_block=(2, 2), block_stride=None, block_norm="L1",
@@ -151,7 +151,6 @@ def processFiles(pos_dir, neg_dir, recurse=False, output_file=False,
             pos_features.append(feature_vector)
         else:
             neg_features.append(feature_vector)
-
         bar.update()
     bar.close()
 
@@ -161,7 +160,7 @@ def processFiles(pos_dir, neg_dir, recurse=False, output_file=False,
     # Store the length of the feature vector produced by the descriptor.
     num_features = len(pos_features[0])
 
-    ##TODO: Instantiate scaler and scale features.
+    # TODO: Instantiate scaler and scale features.
 
     ###### Answer Area ######
     print("Instantiate scaler and scale features.\n")
@@ -170,7 +169,7 @@ def processFiles(pos_dir, neg_dir, recurse=False, output_file=False,
     neg_features = scaler.transform(neg_features)
     ###### Answer Area ######
 
-    ##TODO: Randomize lists of feature vectors. Split 75/20/5 into training,
+    # TODO: Randomize lists of feature vectors. Split 75/20/5 into training,
     # validation, and test sets.
     print("Shuffling samples into training, cross-validation, and test sets.\n")
     random.shuffle(pos_features)
@@ -268,10 +267,10 @@ def trainSVM(filepath=None, feature_data=None, C=1,
     elif feature_data is None:
         raise ValueError("Invalid feature data supplied.")
 
-    ##TODO: Train classifier on training set, using sklearn LinearSVC model. 
-    ##      Use validation sets to adjust your algorithm.
-    ##      Run your classifier on the test sets and output the accuracy,
-    ##      precission, recall and F-1 score.
+    # TODO: Train classifier on training set, using sklearn LinearSVC model.
+    #      Use validation sets to adjust your algorithm.
+    #      Run your classifier on the test sets and output the accuracy,
+    #      precision, recall and F-1 score.
     ###### Answer Area ######
 
     pos_train = np.asarray(feature_data["pos_train"])
@@ -341,7 +340,7 @@ def trainSVM(filepath=None, feature_data=None, C=1,
     classifier_data = {key: val for key, val in feature_data.items()
                        if key not in excludeKeys}
     classifier_data[
-        "classifier"] = classifier  ##TODO: complement the assignment state with the object name of your classifier
+        "classifier"] = classifier  # TODO: complement the assignment state with the object name of your classifier
 
     if output_file:
         if output_filename is None:
