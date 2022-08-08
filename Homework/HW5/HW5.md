@@ -30,9 +30,9 @@ $$E(\mathbf w) = -\sum^N_{n=1}\{t_n\mathrm{ln}y_n + (1-t_n)\mathrm{ln}(1 - y_n)\
 
 Verify the following results for the conditional mean and variance of the mixture density network model.
 
-(a) $\mathbb E[\mathbf{t|x}] = \int \mathbf tp(\mathbf{t|x})\mathrm d \mathbf t = \sum^K_{k=1}\pi_k(\mathbf x)\mu_k(\mathbf x).$
+(a) $$\mathbb E[\mathbf{t|x}] = \int \mathbf tp(\mathbf{t|x})\mathrm d \mathbf t = \sum_{k=1}^{K} \pi_k(\mathbf x)\mu_k(\mathbf x).$$
 
-(b) $s^2(\mathbf x) = \sum^K_{k=1}\pi_k(\mathbf x)\{\sigma^2_k(\mathbf x) + \Arrowvert\mu_k(\mathbf x) - \sum^K_{l=1}\pi_l(\mathbf x)\mu_l(\mathbf x)\Arrowvert^2\}.$
+(b) $$s^2(\mathbf x) = \sum^K_{k=1}\pi_k(\mathbf x)\{\sigma^2_k(\mathbf x) + \Arrowvert\mu_k(\mathbf x) - \sum^K_{l=1}\pi_l(\mathbf x)\mu_l(\mathbf x)\Arrowvert^2\}.$$
 
 
 
@@ -91,11 +91,11 @@ Answer the following questions in **.ipynb** file before beginning your program 
 
 (c) Using the following toy example, let’s compute by hand exactly how convolutional layer works.
 
-$$input\space image=\begin{bmatrix}4&4&1&3&2\\2&2&4&1&2\\5&1&2&5&1\\2&1&5&2&4\\4&3&4&5&1\end{bmatrix}$$
+$$input\space image={\left\lbrack \matrix{4&4&1&3&2\cr 2&2&4&1&2\cr 5&1&2&5&1\cr 2&1&5&2&4\cr 4&3&4&5&1} \right\rbrack}$$
 
-$$filter\space 1=\begin{bmatrix}-1&0&1\\-3&0&2\\1&1&2\end{bmatrix}$$
+$$filter\space 1=\begin{bmatrix}-1&0&1\cr -3&0&2\cr 1&1&2\end{bmatrix}$$
 
-$$filter\space 2=\begin{bmatrix}2&-2&1\\-1&0&2\\3&-2&0\end{bmatrix}$$
+$$filter\space 2=\begin{bmatrix}2&-2&1\cr -1&0&2\cr 3&-2&0\end{bmatrix}$$
 
 Here we have a $5\times 5\times1$ input image, and we are going to use 2 different filters with size $3\times3\times1$ and stride 1 with no padding as our first convolutional layer. Compute the outputs and complete table. (hint: the output dimension is $3\times 3\times2$)
 
