@@ -6,7 +6,7 @@
 
 Evaluate the distributions $p(a)$, $p(b|c)$, and $p(c|a)$ corresponding to the joint distribution given in Table \ref{table1}.  Hence show by direct evaluation that $p(a, b, c) = p(a)p(c|a)p(b|c)$.  Draw the corresponding directed graph.
 
-<center><b><font size='3'>Table 1. The joint distribution over three binary variables.</font></b></center>
+<b><font size='3'>Table 1. The joint distribution over three binary variables.</font></b>
 
 | a    | b    | c    | p(a,b,c) |
 | ---- | ---- | ---- | -------- |
@@ -25,11 +25,13 @@ Evaluate the distributions $p(a)$, $p(b|c)$, and $p(c|a)$ corresponding to the j
 
 Consider the directed graph shown in Figure 1 in which none of the variables is observed.
 
-(a) Show that $a \perp \!\!\! \perp b|\emptyset$
+(a) Show that $a ⫫ b|\emptyset$
 
-(b) Suppose we now observe the variable d. Show that in general $a \not \! \perp \!\!\! \perp b | d$.
+(b) Suppose we now observe the variable d. Show that in general $a \not ⫫ b | d$.
 
-<img src="./HW8.assets/fig854.png" alt="Figure.1" style="zoom:33%;" />
+<p align='middle'>
+<img src="./HW8.assets/fig854.png" alt="Figure.1" height='300' width='300' />
+</p>
 
 **Figure 1.** Example of a graphical model used to explore the conditional independence properties of the head-to-head path $a-c-b$ when a descendant of $c$, namely the node $d$, is observed.
 
@@ -51,7 +53,7 @@ Suppose that the driver tells us that the fuel gauge shows empty, in other words
 
 <img src="./HW8.assets/fig821.png" alt="Figure 2" style="zoom: 50%;" />
 
-**Figure 2.** A 3-node graph used to illustrate the phenomenon of ‘explaining away’. The three nodes represent the state of the battery ($B$), the state of the fuel tank ($F$) and the reading on the electric fuel gauge ($G$).
+**Figure 2.** A 3-node graph used to illustrate the phenomenon of ‘explaining away’. The three nodes represent the state of the battery ( $B$ ), the state of the fuel tank ( $F$ ) and the reading on the electric fuel gauge ( $G$ ).
 
 
 
@@ -59,7 +61,7 @@ Suppose that the driver tells us that the fuel gauge shows empty, in other words
 
 Consider a graph of the form shown in Figure 3 having $N = 5$ nodes, in which nodes $x_3$ and $x_5$ are observed.
 
-(a) Use d-separation to show that $x_2 \perp \!\!\! \perp x_5 | x_3$.
+(a) Use d-separation to show that $x_2 ⫫ x_5 | x_3$.
 
 (b) Show that if the message passing algorithm of Section 8.4.1 is applied to the evaluation of $p(x_2|x_3, x_5)$, the result will be independent of the value of $x_5$.
 
@@ -83,14 +85,19 @@ Equation (1) verifies that the sum-product algorithm run on the graph in Figure 
 
 (b) Shown that the use of equation (2) after running the sum-product algorithm on this graph gives the correct joint distribution for $x_1$, $x_2$.
 
-$$\begin{equation}\begin{aligned}\widetilde{p}(x_2) &= \mu_{f_a\rightarrow x_2}(x_2)\mu_{f_b\rightarrow x_2}(x_2)\mu_{f_c\rightarrow x_2}(x_2) \\ &= \left[\sum_{x_1}f_a(x_1, x_2)\right]\left[\sum_{x_3}f_b(x_2, x_3)\right]\left[\sum_{x_4}f_c(x_2, x_4)\right] \\ &= \sum_{x_1}\sum_{x_3}\sum_{x_4}f_a(x_1, x_2)f_b(x_2, x_3)f_c(x_2, x_4) \\ &= \sum_{x_1}\sum_{x_3}\sum_{x_4}\widetilde{p}(\mathbf x)\end{aligned}\tag{1}\end{equation}$$
+$$\begin{equation}\begin{aligned}\widetilde{p}(x_2) &= \mu_{f_a\rightarrow x_2}(x_2)\mu_{f_b\rightarrow x_2}(x_2)\mu_{f_c\rightarrow x_2}(x_2) \\\ &= \left[\sum_{x_1}f_a(x_1, x_2)\right]\left[\sum_{x_3}f_b(x_2, x_3)\right]\left[\sum_{x_4}f_c(x_2, x_4)\right] \\\ &= \sum_{x_1}\sum_{x_3}\sum_{x_4}f_a(x_1, x_2)f_b(x_2, x_3)f_c(x_2, x_4) \\\ &= \sum_{x_1}\sum_{x_3}\sum_{x_4}\widetilde{p}(\mathbf x)\end{aligned}\end{equation}\space\space\space\space\space\space\space\space\space(1)$$
 
 
 
-$$\begin{equation}p(\mathbf x_s) = f_s(\mathbf x_s)\prod_{i\in ne(f_s)}\mu_{x_i\rightarrow f_s}(x_i)\tag{2}\end{equation}$$
+$$\begin{equation}p(\mathbf x_s) = f_s(\mathbf x_s)\prod_{i\in ne(f_s)}\mu_{x_i\rightarrow f_s}(x_i)\end{equation}\space\space\space\space\space\space\space\space(2)$$
 
 
+<p align='middle'>
+<img src="./HW8.assets/fig851.png" alt="Figure 4" height="300" width="450" />
+</p>
 
-<img src="./HW8.assets/fig851.png" alt="Figure 4" style="zoom: 33%;" />
-
-**Figure 4.** A simple factor graph used to illustrate the sum-product algorithm.
+<p align='middle'>
+  <b>
+Figure 4. A simple factor graph used to illustrate the sum-product algorithm.
+  </b>
+</p>

@@ -38,7 +38,7 @@ The probability density function of $Gamma(2,\beta)$ is $P(X = x) =\beta^2xe^{-\
 
 (b) Describe the E-step: compute $P(Z=k|X=x)$ for each $X = x$. Write an equation for each value being computed.
 
-**Hint.** $P(Z=1|X=1)=\frac{P(X=1|Z=1)P(Z=1)}{\sum\limits_{k=1} P(X=1|Z=k)P(Z=k)}$
+**Hint.** $P(Z=1|X=1)=\frac{P(X=1|Z=1)P(Z=1)}{\sum_k P(X=1|Z=k)P(Z=k)}$
 
 
 
@@ -60,19 +60,19 @@ For a hidden Markov model having discrete observations governed by a multinomial
 
 Suppose we wish to train a hidden Markov model by maximum likelihood using data that comprises $R$ independent sequences of observations, which we denote by $\mathbf X^{(r)}$ where $r = 1, ..., R$. 
 
-(a) Show that in the E step of the EM algorithm, we simply evaluate posterior probabilities for the latent variables by running the $\alpha$and $\beta$ recursions independently for each of the sequences. 
+(a) Show that in the E step of the EM algorithm, we simply evaluate posterior probabilities for the latent variables by running the $\alpha$ and $\beta$ recursions independently for each of the sequences. 
 
 (b) Show that in the M step, the initial probability and transition probability parameters are re-estimated using modified forms of (13.18) and (13.19) given by 
 
-$$\pi_k = \frac{\sum^R_{r = 1}\gamma(z^{(r)}_{1k})}{\sum^R_{r = 1}\sum^K_{j = 1}\gamma(z^{(r)}_{1j})}$$
+$$\pi_ k=\frac{\Sigma^R_ {r=1} \gamma(z^{(r)}_ {1k})}{\Sigma^R_ {r=1}\Sigma^K_ {j=1}\gamma(z^{(r)}_ {1j})}$$
 
-$$A_{jk} = \frac{\sum^R_{r = 1}\sum^N_{n = 2}\xi(z^{(r)}_{n - 1, j},z^{(r)}_{n, k})}{\sum^R_{r = 1}\sum^K_{l = 1}\sum^N_{n = 2}\xi(z^{(r)}_{n - 1, j},z^{(r)}_{n, l})}$$
+$$A_ {jk} = \frac{\Sigma^R_ {r = 1}\Sigma^N_ {n = 2}\xi(z^{(r)}_ {n - 1, j},z^{(r)}_ {n, k})}{\Sigma^R_ {r = 1}\Sigma^K_ {l = 1}\Sigma^N_ {n = 2}\xi(z^{(r)}_ {n - 1, j},z^{(r)}_ {n, l})}$$
 
 where for notational convenience, we have assumed that the sequences are of the same length (the generalization to sequences of different lengths is straightforward).
 
 (c) Show that the M-step equation for re-estimation of the means of Gaussian emission models is given by
 
-$$\mu_k = \frac{\sum^R_{r = 1}\sum^N_{n = 1}\gamma(z^{(r)}_{nk})\mathbf x^{(r)}_n}{\sum^R_{r = 1}\sum^N_{n = 1}\gamma(z^{(r)}_{nk})}$$
+$$\mu_ k = \frac{\Sigma^R_ {r = 1}\Sigma^N_ {n = 1}\gamma(z^{(r)}_ {nk})\mathbf x^{(r)}_ n}{\Sigma^R_ {r = 1}\Sigma^N_ {n = 1}\gamma(z^{(r)}_ {nk})}$$
 
 Note that the M-step equations for other emission model parameters and distributions take an analogous form.
 
